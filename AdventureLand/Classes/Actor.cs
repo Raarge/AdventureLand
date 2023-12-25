@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureLand.Classes
 {
-    public class Actor : Thing
+    public class Actor : ThingHolder
     {
         private Room _location;
         public Actor(string aName, string aDescription, Room aRoom) :

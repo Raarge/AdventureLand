@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdventureLand.Classes
 {
-    public class Room : Thing
+    public class Room : ThingHolder
     {
         private Rm _n;
         private Rm _s;

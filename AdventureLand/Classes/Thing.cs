@@ -6,27 +6,25 @@ using System.Threading.Tasks;
 
 namespace AdventureLand.Classes
 {
-    public class Thing
+    public class Thing : BasicThing
     {
-        private string _name;
-        private string _description;
+        private bool _cantake;
 
-        public Thing(string aName, string aDescription)
-        {
-            _name = aName;
-            _description = aDescription;
+        public Thing(string aName, string aDescription) : base(aName, aDescription) {
+        // standard constructor:
+            _cantake = true;  // default value
         }
 
-        public string Name
+        public Thing(string aName, string aDescription, bool aCantake) : base(aName, aDescription)
         {
-            get => _name;
-            set => _name = value;
+            // alternate constructor:
+            _cantake= aCantake;
         }
 
-        public string Description
+        public bool CanTake
         {
-            get => _description;
-            set => _description = value;
+            get => _cantake;
+            set => _cantake = value;
         }
     }
 }
