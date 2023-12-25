@@ -33,11 +33,21 @@ namespace AdventureLand
 
         private void InitGame()
         {
+            ThingList trollroomlist = new ThingList();
+            ThingList forestlist = new ThingList();
+            ThingList dungeonlist = new ThingList();
 
-            room0 = new Room("Troll Room", "a dank, dark room that smells of troll", Rm.NOEXIT, Rm.Cave, Rm.NOEXIT, Rm.Forest);
-            room1 = new Room("Forest Room", "a light, airy forest shimmering with sunlight", Rm.NOEXIT, Rm.NOEXIT, Rm.TrollRoom, Rm.NOEXIT);
-            room2 = new Room("Cave Room", "a vast cave with walls covered by luminous moss", Rm.TrollRoom, Rm.NOEXIT, Rm.NOEXIT, Rm.Dungeon);
-            room3 = new Room("Dungeon Room", "a gloomydungeon, Rats scurry across it's floor", Rm.NOEXIT, Rm.NOEXIT, Rm.Cave, Rm.NOEXIT);
+            trollroomlist.Add(new Thing("carrot", "It is a very crunch carrot."));
+
+            forestlist.Add(new Thing("sausage", "It is a plump port sausage."));
+            forestlist.Add(new Thing("tree", "It is a gigantic oak tree.", false));
+
+            dungeonlist.Add(new Thing("statue", "It is a delapidated troll statue.", false));
+
+            room0 = new Room("Troll Room", "a dank, dark room that smells of troll", Rm.NOEXIT, Rm.Cave, Rm.NOEXIT, Rm.Forest, trollroomlist);
+            room1 = new Room("Forest Room", "a light, airy forest shimmering with sunlight", Rm.NOEXIT, Rm.NOEXIT, Rm.TrollRoom, Rm.NOEXIT, forestlist);
+            room2 = new Room("Cave Room", "a vast cave with walls covered by luminous moss", Rm.TrollRoom, Rm.NOEXIT, Rm.NOEXIT, Rm.Dungeon, new ThingList());
+            room3 = new Room("Dungeon Room", "a gloomydungeon, Rats scurry across it's floor", Rm.NOEXIT, Rm.NOEXIT, Rm.Cave, Rm.NOEXIT, dungeonlist);
 
             _map = new RoomList();
 
@@ -46,7 +56,7 @@ namespace AdventureLand
             _map.Add(Rm.Cave, room2 );
             _map.Add(Rm.Dungeon, room3 );   
 
-            _player = new Actor("You", "The Player", room0);
+            _player = new Actor("You", "The Player", room0, new ThingList());
         }
         
         private void StartGame()
@@ -164,6 +174,15 @@ namespace AdventureLand
         private void Look()
         {
             Console.WriteLine($"You are in the {_player.Location.Name}. It is {_player.Location.Description}\r\n");
+            if (_player.Location.Things.Count > 0)
+            {
+                Console.WriteLine($"Also here: "); 
+                foreach (Thing things in _player.Location.Things)
+                {
+                    Console.WriteLine ($"There is a treasure here. ");
+                }
+            }
+                    
         }
 
         private void MovePlayer(Rm newpos)

@@ -13,7 +13,7 @@ namespace AdventureLand.Classes
         private Rm _w;
         private Rm _e;
 
-        public Room(string aName, string aDescription, Rm n, Rm s, Rm w, Rm e) : base (aName, aDescription)
+        public Room(string aName, string aDescription, Rm n, Rm s, Rm w, Rm e, ThingList tl) : base (aName, aDescription, tl)
         {
             _n = n;
             _s = s;

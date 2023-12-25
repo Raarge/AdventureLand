@@ -10,7 +10,7 @@ namespace AdventureLand.Classes
     {
         private ThingList _things = new ThingList();
 
-        public ThingHolder(string aName, string aDescription, ThingList tl) : base(aName, aDescription, tl)
+        public ThingHolder(string aName, string aDescription, ThingList tl) : base(aName, aDescription)
         {
             _things = tl;
         }

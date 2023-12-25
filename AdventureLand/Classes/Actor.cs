@@ -10,8 +10,8 @@ namespace AdventureLand.Classes
     public class Actor : ThingHolder
     {
         private Room _location;
-        public Actor(string aName, string aDescription, Room aRoom) :
-            base(aName, aDescription)
+        public Actor(string aName, string aDescription, Room aRoom, ThingList tl) :
+            base(aName, aDescription, tl)
         {
             _location = aRoom;
         }
