@@ -8,12 +8,12 @@ namespace AdventureLand.Classes
 {
     public class Room : Thing
     {
-        private int _n;
-        private int _s;
-        private int _w;
-        private int _e;
+        private Rm _n;
+        private Rm _s;
+        private Rm _w;
+        private Rm _e;
 
-        public Room(string aName, string aDescription, int n, int s, int w, int e) : base (aName, aDescription)
+        public Room(string aName, string aDescription, Rm n, Rm s, Rm w, Rm e) : base (aName, aDescription)
         {
             _n = n;
             _s = s;
@@ -21,28 +21,33 @@ namespace AdventureLand.Classes
             _e = e;
         }
 
-       public int N
+       public Rm N
         {
             get => _n;
             set => _n = value;
         }
 
-        public int S
+        public Rm S
         {
             get => _s;
             set => _s = value;
         }
 
-        public int W
+        public Rm W
         {
             get => _w;
             set => _w = value;
         }
 
-        public int E
+        public Rm E
         {
             get => _e; 
             set => _e = value;
+        }
+
+        public string Describe()
+        {
+            return $"[{Name}] This is {Description}";
         }
     }
 }

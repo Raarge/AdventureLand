@@ -1,13 +1,14 @@
 ﻿using AdventureLand.Classes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AdventureLand
 {
-    internal class game
+    public class Game
     {
         /*
          * Troll Room -- Forest
@@ -20,11 +21,11 @@ namespace AdventureLand
         Room room2;
         Room room3;
 
-        Room[] map;
+        private RoomList _map;
 
         private Actor _player;
 
-        public game()
+        public Game()
         {
             InitGame();
             StartGame();
@@ -32,17 +33,18 @@ namespace AdventureLand
 
         private void InitGame()
         {
-            room0 = new Room("Troll Room", "a dank, dark room that smells of troll", -1, 2, -1, 1);
-            room1 = new Room("Forrest", "a light, airy forest shimmering with sunlight", -1, -1, 0, -1);
-            room2 = new Room("Cave", "a vast cave with walls covered by luminous moss", 0, -1, -1, 3);
-            room3 = new Room("Dungeon", "a gloomydungeon, Rats scurry across it's floor", -1, -1, 2, -1);
 
-            map = new Room[4];
+            room0 = new Room("Troll Room", "a dank, dark room that smells of troll", Rm.NOEXIT, Rm.Cave, Rm.NOEXIT, Rm.Forest);
+            room1 = new Room("Forest Room", "a light, airy forest shimmering with sunlight", Rm.NOEXIT, Rm.NOEXIT, Rm.TrollRoom, Rm.NOEXIT);
+            room2 = new Room("Cave Room", "a vast cave with walls covered by luminous moss", Rm.TrollRoom, Rm.NOEXIT, Rm.NOEXIT, Rm.Dungeon);
+            room3 = new Room("Dungeon Room", "a gloomydungeon, Rats scurry across it's floor", Rm.NOEXIT, Rm.NOEXIT, Rm.Cave, Rm.NOEXIT);
 
-            map[0] = room0;
-            map[1] = room1;
-            map[2] = room2;
-            map[3] = room3;
+            _map = new RoomList();
+
+            _map.Add(Rm.TrollRoom, room0);
+            _map.Add(Rm.Forest, room1 );
+            _map.Add(Rm.Cave, room2 );
+            _map.Add(Rm.Dungeon, room3 );   
 
             _player = new Actor("You", "The Player", room0);
         }
@@ -53,7 +55,7 @@ namespace AdventureLand
             string input = "";
             string output = "";
 
-            s = $"Welcome to the Great Adventure!\r\nYou are in the {_player.Location.Name}. It is {_player.Location.Description}.\r\n" +
+            s = $"Welcome to the Great Adventure!\r\nYou are in the {_map[Rm.TrollRoom]}. It is {_player.Location.Description}.\r\n" +
                 "Where do you want to go now?\r\n" +
                 "Enter: N, S, W or E.\r\n";
             Console.WriteLine(s);
@@ -93,10 +95,15 @@ namespace AdventureLand
         //    }
         //}
 
+        private void Debug()
+        {
+            Console.WriteLine(_map.Describe());
+        }
+
         private void ParseCommand(List<string> wordlist)
         {
             String verb;
-            List<string> commands = new List<string> { "n", "s", "w", "e", "look" };
+            List<string> commands = new List<string> { "n", "s", "w", "e", "look", "debug" };
 
             verb = wordlist[0];
 
@@ -122,6 +129,9 @@ namespace AdventureLand
                         break;
                     case "look":
                         Look();
+                        break;
+                    case "debug":
+                        Debug();
                         break;
                     default:
                         Console.WriteLine(verb + " not understood");
@@ -156,14 +166,14 @@ namespace AdventureLand
             Console.WriteLine($"You are in the {_player.Location.Name}. It is {_player.Location.Description}\r\n");
         }
 
-        private void MovePlayer(int newpos)
+        private void MovePlayer(Rm newpos)
         {
-            if (newpos == -1)
+            if (newpos == Rm.NOEXIT)
             {
                 Console.WriteLine("There is no exit in that direction.");
             } else
             {
-                _player.Location = map[newpos];
+                _player.Location = _map.RoomAt(newpos);
                 Console.WriteLine($"You are now in the {_player.Location.Name}.");
             }
         }

@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 
+
 public class Program
 {
         
-    public static void Main(string[] args)
+    static void Main(string[] args)
     {
 
-        AdventureLand.game g = new AdventureLand.game();
+        AdventureLand.Game g = new AdventureLand.Game();
              
         
     }
