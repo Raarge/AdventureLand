@@ -186,6 +186,10 @@ namespace AdventureLand
                     case "e":
                         MovePlayer(_player.Location.E);
                         break;
+                    case "i":
+                    case "inventory":
+                        Inventory(_player);
+                        break;
                     case "l":
                     case "look":
                         Look(_player.Location);

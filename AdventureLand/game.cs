@@ -256,6 +256,22 @@ namespace AdventureLand
             fromlist.Remove(t);
             tolist.Add(t);
         }
+
+        public void Inventory(Actor p)
+        {
+            if (_player.Things == null)
+            {
+                Console.WriteLine("You are not currently carrying anything.");
+            }
+            else
+            {
+                Console.WriteLine("You are carrying the following: \r\n");
+                foreach (Thing t in _player.Things)
+                {
+                    Console.WriteLine($"{t.Name}, {t.Description}");
+                }
+            }
+        }
     }
 }
 
