@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AdventureLand
 {
-    public class Game
+    public partial class Game
     {
         /*
          * Troll Room -- Forest
@@ -27,6 +27,7 @@ namespace AdventureLand
 
         public Game()
         {
+            InitVocab();
             InitGame();
             StartGame();
         }
@@ -110,66 +111,47 @@ namespace AdventureLand
             Console.WriteLine(_map.Describe());
         }
 
-        private void ParseCommand(List<string> wordlist)
-        {
-            String verb;
-            List<string> commands = new List<string> { "n", "s", "w", "e", "look", "debug" };
+        //private void ProcessVerb(List<string> wordlist)
+        //{
+        //    String verb;
+        //    List<string> commands = new List<string> { "n", "s", "w", "e", "look", "debug" };
 
-            verb = wordlist[0];
+        //    verb = wordlist[0];
 
-            if (!commands.Contains(verb))
-            {
-                Console.WriteLine(verb + " is not known!");
-            }
-            else
-            {
-                switch (verb)
-                {
-                    case "n":
-                        MovePlayer(_player.Location.N);
-                        break;
-                    case "s":
-                        MovePlayer(_player.Location.S);
-                        break;
-                    case "w":
-                        MovePlayer(_player.Location.W);
-                        break;
-                    case "e":
-                        MovePlayer(_player.Location.E); 
-                        break;
-                    case "look":
-                        Look();
-                        break;
-                    case "debug":
-                        Debug();
-                        break;
-                    default:
-                        Console.WriteLine(verb + " not understood");
-                        break;
-                }
-            }
-        }
+        //    if (!commands.Contains(verb))
+        //    {
+        //        Console.WriteLine(verb + " is not known!");
+        //    }
+        //    else
+        //    {
+        //        switch (verb)
+        //        {
+        //            case "n":
+        //                MovePlayer(_player.Location.N);
+        //                break;
+        //            case "s":
+        //                MovePlayer(_player.Location.S);
+        //                break;
+        //            case "w":
+        //                MovePlayer(_player.Location.W);
+        //                break;
+        //            case "e":
+        //                MovePlayer(_player.Location.E);
+        //                break;
+        //            case "look":
+        //                Look();
+        //                break;
+        //            case "debug":
+        //                Debug();
+        //                break;
+        //            default:
+        //                Console.WriteLine(verb + " not understood");
+        //                break;
+        //        }
+        //    }
+        //}
 
-        public string RunCommand(string inputstr)
-        {
-            char[] delims = { ' ', '.' };
-            List<string> strlist;
-            string s = "ok";
-            string lowstr = inputstr.Trim().ToLower();
 
-            if (lowstr != "q")
-                if (lowstr == "")
-                {
-                    s = "You must enter a command";
-                }
-                else
-                {
-                    strlist = new List<string>(lowstr.Split(delims, StringSplitOptions.RemoveEmptyEntries));
-                    
-                    ParseCommand(strlist);
-                }
-            return s;
-        }
 
         private void Look()
         {
