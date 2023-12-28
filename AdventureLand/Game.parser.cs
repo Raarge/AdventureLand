@@ -203,19 +203,23 @@ namespace AdventureLand
 
         }
 
-        private string TakeOb(string wt)
-        {
-            string s = "";
-            s = $"You take {wt}";
-            return s;
-        }
+        // test method for taking
+        //
+        //private string TakeOb(string wt)
+        //{
+        //    string s = "";
+        //    s = $"You take {wt}";
+        //    return s;
+        //}
 
-        private string DropOb(string wt)
-        {
-            string s = "";
-            s = $"You drop {wt}";
-            return s;
-        }
+        // test method for dropping
+        //
+        //private string DropOb(string wt)
+        //{
+        //    string s = "";
+        //    s = $"You drop {wt}";
+        //    return s;
+        //}
 
         private string exits(Room room)
         {

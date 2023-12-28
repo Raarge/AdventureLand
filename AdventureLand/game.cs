@@ -44,6 +44,7 @@ namespace AdventureLand
             forestlist.Add(new Thing("tree", "It is a gigantic oak tree.", false));
 
             dungeonlist.Add(new Thing("statue", "It is a delapidated troll statue.", false));
+            
 
             //                                                                                N      S      W         E
             room0 = new Room("Troll Room", "a dank, dark room that smells of troll", Rm.NOEXIT, Rm.Cave, Rm.NOEXIT, Rm.Forest, trollroomlist);
@@ -205,6 +206,55 @@ namespace AdventureLand
                 }
 
             }
+        }
+
+        public string TakeOb(string obname)
+        {
+            Thing t = _player.Location.Things.ThisOb(obname);
+            string s = "";
+            if (obname == "")
+            {
+                obname = "nameless object";  // no object specified
+            }
+            if (t == null)
+            {
+                s = "There is no " + obname + " here!";
+            }
+            else
+            {
+                if (t.CanTake)
+                {
+                    TransferOb(t, _player.Location.Things, _player.Things);
+                    s = t.Name + " taken!";
+                }
+                else
+                {
+                    s = "You can't take the " + t.Name + "!";
+                }
+            }
+            return s;
+        }
+
+        public string DropOb(string obname)
+        {
+            Thing t = _player.Things.ThisOb(obname);
+            string s = "";
+            if (t == null) 
+            {
+                s = "You haven't got one!";
+            }
+            else
+            {
+                TransferOb(t, _player.Things, _player.Location.Things);
+                s = t.Name + " dropped!";
+            }
+            return s;
+        }
+
+        private void TransferOb(Thing t, ThingList fromlist,  ThingList tolist)
+        {
+            fromlist.Remove(t);
+            tolist.Add(t);
         }
     }
 }
