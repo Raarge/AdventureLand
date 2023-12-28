@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdventureLand.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace AdventureLand
             vocab.Add("acorn", WT.NOUN);
             vocab.Add("bed", WT.NOUN);
             vocab.Add("bin", WT.NOUN);
+            vocab.Add("carrot", WT.NOUN);
             vocab.Add("sausage", WT.NOUN);
             vocab.Add("statue", WT.NOUN);
             vocab.Add("sword", WT.NOUN);
@@ -23,6 +25,7 @@ namespace AdventureLand
             vocab.Add("inventory", WT.VERB);
             vocab.Add("take", WT.VERB);
             vocab.Add("drop", WT.VERB);
+            vocab.Add("l", WT.VERB);
             vocab.Add("look", WT.VERB);
             vocab.Add("n", WT.VERB);
             vocab.Add("s", WT.VERB);
@@ -183,8 +186,9 @@ namespace AdventureLand
                     case "e":
                         MovePlayer(_player.Location.E);
                         break;
+                    case "l":
                     case "look":
-                        Look();
+                        Look(_player.Location);
                         break;
                     case "debug":
                         Debug();
@@ -211,6 +215,68 @@ namespace AdventureLand
             string s = "";
             s = $"You drop {wt}";
             return s;
+        }
+
+        private string exits(Room room)
+        {
+            string e = "";
+            string temp = "";
+            bool moreThanOne = false;
+
+            if(room.N != Rm.NOEXIT) 
+            {
+                temp = "North";
+                moreThanOne = true;
+            }
+            if (room.S != Rm.NOEXIT)
+            {
+                if (moreThanOne == true)
+                {
+                    e = temp + ", South";
+                    temp = e;
+                } 
+                else
+                {
+					e = temp + "South";
+					moreThanOne = true;
+					temp = e;
+				}
+                
+            }
+            if (room.W != Rm.NOEXIT)
+            {
+                if (moreThanOne == true)
+                {
+                    e = temp + ", West";
+                    temp = e;
+                }
+                else
+                {
+                    e = temp + "West";
+                    moreThanOne = true;
+                    temp = e;
+                }
+            }
+            if (room.E != Rm.NOEXIT)
+            {
+                if (moreThanOne == true)
+                {
+                    e = temp + ", East";
+                    temp = e;
+                }
+                else
+                {
+                    e = temp + "East";
+                    moreThanOne = true;
+                }
+            }
+            if (e == "")
+            {
+                e = "No Exits";
+            }
+
+            return e;
+
         }
     }
 

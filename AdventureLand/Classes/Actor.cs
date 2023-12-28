@@ -21,5 +21,7 @@ namespace AdventureLand.Classes
             get => _location;
             set => _location = value;
         }
+
+        
     }
 }

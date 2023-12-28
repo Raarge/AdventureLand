@@ -45,6 +45,7 @@ namespace AdventureLand
 
             dungeonlist.Add(new Thing("statue", "It is a delapidated troll statue.", false));
 
+            //                                                                                N      S      W         E
             room0 = new Room("Troll Room", "a dank, dark room that smells of troll", Rm.NOEXIT, Rm.Cave, Rm.NOEXIT, Rm.Forest, trollroomlist);
             room1 = new Room("Forest Room", "a light, airy forest shimmering with sunlight", Rm.NOEXIT, Rm.NOEXIT, Rm.TrollRoom, Rm.NOEXIT, forestlist);
             room2 = new Room("Cave Room", "a vast cave with walls covered by luminous moss", Rm.TrollRoom, Rm.NOEXIT, Rm.NOEXIT, Rm.Dungeon, new ThingList());
@@ -73,7 +74,7 @@ namespace AdventureLand
 
             do
             {
-                Console.Write(">");
+                Console.Write($"[{_player.Location.Name}] >");
                 input = Console.ReadLine();
                 output = RunCommand(input);
                 Console.WriteLine(output);
@@ -153,15 +154,23 @@ namespace AdventureLand
 
 
 
-        private void Look()
+        private void Look(Room rm)
         {
-            Console.WriteLine($"You are in the {_player.Location.Name}. It is {_player.Location.Description}\r\n");
+            Console.WriteLine($"You are in the {_player.Location.Name}. It is {_player.Location.Description}. Exits: {exits(rm)}\r\n");
             if (_player.Location.Things.Count > 0)
             {
-                Console.WriteLine($"Also here: "); 
-                foreach (Thing things in _player.Location.Things)
+                Console.WriteLine($"Also here: ");
+                if (rm.Things.Count == 0)
                 {
-                    Console.WriteLine ($"There is a treasure here. ");
+                    Console.WriteLine("nothing.");
+                }
+                else
+                { 
+                    foreach (Thing things in rm.Things)
+                    {
+                        Console.WriteLine($"{things.Name}, {things.Description}");
+                    }
+                    
                 }
             }
                     
@@ -175,7 +184,26 @@ namespace AdventureLand
             } else
             {
                 _player.Location = _map.RoomAt(newpos);
-                Console.WriteLine($"You are now in the {_player.Location.Name}.");
+                Console.WriteLine($"You are now in the {_player.Location.Name}.\r\n{_player.Location.Description}. Exits: {exits(_map.RoomAt(newpos))}\r\n ");
+
+                if (_player.Location.Things.Count > 0)
+                {
+                    Room rm = _map.RoomAt(newpos);
+                    Console.WriteLine($"Also here: ");
+                    if (rm.Things.Count == 0)
+                    {
+                        Console.WriteLine("nothing.");
+                    }
+                    else
+                    {
+                        foreach (Thing things in rm.Things)
+                        {
+                            Console.WriteLine($"{things.Name}, {things.Description}");
+                        }
+
+                    }
+                }
+
             }
         }
     }
